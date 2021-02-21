@@ -20,6 +20,7 @@ import pandas as pd
 # define DataFrame column names once
 USER_NAME_COL = "user_name"
 USER_ID_COL = "user_id"
+USER_EMAIL_COL = "user_email"
 MSG_TYPE_COL = "message_type"
 USER_ID_COL = "user_id"
 MSG_TEXT_COL = "message_text"
@@ -44,7 +45,7 @@ def get_all_members(slack: WebClient, channel_id: str) -> List[str]:
 
 def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
     logging.info(f"Fetching user data for {len(user_ids)} users...")
-    user_df = pd.DataFrame(columns=[USER_NAME_COL, USER_ID_COL])
+    user_df = pd.DataFrame(columns=[USER_NAME_COL, USER_ID_COL, USER_EMAIL_COL])
     for user_id in user_ids:
         response = slack.users_profile_get(user=user_id)
         profile = response["profile"]
@@ -52,6 +53,7 @@ def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
             {
                 USER_NAME_COL: profile["display_name_normalized"],
                 USER_ID_COL: user_id,
+                USER_EMAIL_COL: profile["email"],
             },
             ignore_index=True,
         )
@@ -59,14 +61,15 @@ def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
     return user_df
 
 
-def get_channel_messages(slack: WebClient, channel_id: str) -> pd.DataFrame:
+def get_channel_messages(
+    slack: WebClient, channel_id: str, days_to_fetch: int
+) -> pd.DataFrame:
     logging.info(f"Fetching messages for channel_id {channel_id}...")
-    DAYS_TO_FETCH = 365
     LIMIT = 200
     message_df = pd.DataFrame(
         columns=[MSG_TYPE_COL, USER_ID_COL, MSG_TEXT_COL, MSG_TS_COL]
     )
-    start_date = datetime.datetime.now() - datetime.timedelta(days=DAYS_TO_FETCH)
+    start_date = datetime.datetime.now() - datetime.timedelta(days=days_to_fetch)
     start_ts = start_date.timestamp()
     cursor = None
     while True:
@@ -94,7 +97,7 @@ def get_channel_messages(slack: WebClient, channel_id: str) -> pd.DataFrame:
     return message_df
 
 
-def run_audit(channel_name: str, slack_token: str) -> None:
+def run_audit(channel_name: str, slack_token: str, days_to_fetch: int) -> None:
     logging.info("Starting audit...")
     slack = WebClient(token=slack_token)
     channel_id = get_channel_id(slack, channel_name)
@@ -103,7 +106,7 @@ def run_audit(channel_name: str, slack_token: str) -> None:
         return
     user_ids = get_all_members(slack, channel_id)
     user_df = get_user_data(slack, user_ids)
-    message_df = get_channel_messages(slack, channel_id)
+    message_df = get_channel_messages(slack, channel_id, days_to_fetch)
     message_df = message_df.merge(user_df, on=USER_ID_COL)
     output_path = f"/app/outputs/{channel_name}.csv"
     message_df.to_csv(output_path)
@@ -111,14 +114,23 @@ def run_audit(channel_name: str, slack_token: str) -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
+    ap.add_argument("-c", "--channel", required=True, help="Channel to audit")
     ap.add_argument(
         "-t",
         "--token",
         required=True,
         help=f"Slack token from your app: https://api.slack.com/apps",
     )
-    ap.add_argument("-c", "--channel", required=True, help="Channel to audit")
+    ap.add_argument(
+        "-d",
+        "--days",
+        required=False,
+        help="Number of days to scrape",
+        type=int,
+        default=365,
+    )
     args = vars(ap.parse_args())
     channel = args["channel"]
     token = args["token"]
-    run_audit(channel, token)
+    days_to_fetch = args["days"]
+    run_audit(channel, token, days_to_fetch)
