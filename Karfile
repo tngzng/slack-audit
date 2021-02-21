@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+REPOSITORY=slack-audit
+DOCKER_OPTS=$(cat <<END_HEREDOC
+    -v $(pwd):/app \
+    -it $REPOSITORY
+END_HEREDOC
+)
+
+#@build
+#+Build docker image.
+task-build() {
+    docker build . -t $REPOSITORY
+}
+
+#@run
+#+Run docker container.
+task-run() {
+    docker run -it $DOCKER_OPTS "$@"
+}

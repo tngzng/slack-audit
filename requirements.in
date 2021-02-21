@@ -1,0 +1,4 @@
+boto3
+slack_sdk
+aiohttp
+pandas
