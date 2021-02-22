@@ -53,7 +53,7 @@ def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
             {
                 USER_NAME_COL: profile["display_name_normalized"],
                 USER_ID_COL: user_id,
-                USER_EMAIL_COL: profile["email"],
+                USER_EMAIL_COL: profile.get("email", ""),
             },
             ignore_index=True,
         )
@@ -79,6 +79,10 @@ def get_channel_messages(
         messages = response["messages"]
         logging.info(f"FETCHED {len(messages)} messages")
         for message in messages:
+            # bot messages will not have a user
+            if not message.get("user"):
+                continue
+
             message_df = message_df.append(
                 {
                     MSG_TYPE_COL: message["type"],
