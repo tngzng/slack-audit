@@ -10,7 +10,7 @@ Companion code for a 2021 lightning talk at NICAR called "Body Commodification: 
 📊 a notebook to analyze the data
 
 ## read the slides
-The talks slides are available at [this link](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit). (The speaker notes contain the exact presentation script and every image has alternate text.)
+The talks slides are available at [this link](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit). 
 
 [![the presentation's title slide](./docs/first-slide.png)](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit)
 
@@ -18,8 +18,15 @@ The talks slides are available at [this link](https://docs.google.com/presentati
 To pull your organization's Slack message history:
 
 1. Create a [Slack App](https://api.slack.com/apps) with the following permissions:
-
-![a list of necessary permissions: channels:history, channels:read, channels:write, groups:history, groups:write, im:write, mpim:write, users.profile:read, users: read](./docs/permission-list.png)
+    * channels:history
+    * channels:read
+    * channels:write
+    * groups:history
+    * groups:write
+    * im:write
+    * mpim:write
+    * users.profile:read
+    * users: read 
 
 2. Prepare your development environment (assumes you have Docker installed on a Mac**):
 ```
