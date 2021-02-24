@@ -45,4 +45,6 @@ pip install -r requirements.txt
 ```
 
 ## analyze the data
+Once you've pulled the Slack message data, you can upload the data in this [Python notebook](https://colab.research.google.com/github/tngzng/slack-audit/blob/main/slack_message_analysis.ipynb), along with your own diversity data. After setting a few constants, you'll be able to visualize breakdowns in total messages and messages over time. 
 
+[![a screenshot of the Python notebook](./docs/notebook.png)](https://colab.research.google.com/drive/1W_LYegGxWBVqZ4_jeJaC8lT8hGHEvH5G#scrollTo=VFt3ldA57Mwe)
