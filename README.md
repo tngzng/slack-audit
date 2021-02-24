@@ -10,7 +10,7 @@ Companion code for a 2021 lightning talk at NICAR called "Body Commodification: 
 📊 a notebook to analyze the data
 
 ## read the slides
-The talks slides are available at [this link](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit). 
+The talk slides are available at [this link](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit). 
 
 [![the presentation's title slide](./docs/first-slide.png)](https://docs.google.com/presentation/d/1NwBzpMZawp4HRLkB-BHb2BOvRK4DGCN4brlHJwdja_A/edit)
 
@@ -45,6 +45,6 @@ pip install -r requirements.txt
 ```
 
 ## analyze the data
-Once you've pulled the Slack message data, you can upload the data in this [Python notebook](https://colab.research.google.com/github/tngzng/slack-audit/blob/main/slack_message_analysis.ipynb), along with your own diversity data. After setting a few constants, you'll be able to visualize breakdowns in total messages and messages over time. 
+Once you've pulled the Slack message data, you can upload the data in the accompanying [Python notebook](https://colab.research.google.com/github/tngzng/slack-audit/blob/main/slack_message_analysis.ipynb). You can refer to the notebook for more detailed instructions on running the analysis. 
 
 [![a screenshot of the Python notebook](./docs/notebook.png)](https://colab.research.google.com/drive/1W_LYegGxWBVqZ4_jeJaC8lT8hGHEvH5G#scrollTo=VFt3ldA57Mwe)
