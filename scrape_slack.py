@@ -86,7 +86,6 @@ def get_channel_messages(
                 {
                     MSG_TYPE_COL: message["type"],
                     USER_ID_COL: message["user"],
-                    MSG_TEXT_COL: message["text"],
                     MSG_TS_COL: message["ts"],
                 },
                 ignore_index=True,
