@@ -23,7 +23,6 @@ USER_ID_COL = "user_id"
 USER_EMAIL_COL = "user_email"
 MSG_TYPE_COL = "message_type"
 USER_ID_COL = "user_id"
-MSG_TEXT_COL = "message_text"
 MSG_TS_COL = "message_ts"
 
 
@@ -66,9 +65,7 @@ def get_channel_messages(
 ) -> pd.DataFrame:
     logging.debug(f"Fetching messages for channel_id {channel_id}...")
     LIMIT = 200
-    message_df = pd.DataFrame(
-        columns=[MSG_TYPE_COL, USER_ID_COL, MSG_TEXT_COL, MSG_TS_COL]
-    )
+    message_df = pd.DataFrame(columns=[MSG_TYPE_COL, USER_ID_COL, MSG_TS_COL])
     start_date = datetime.datetime.now() - datetime.timedelta(days=days_to_fetch)
     start_ts = start_date.timestamp()
     cursor = None
