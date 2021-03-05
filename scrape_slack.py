@@ -11,6 +11,7 @@ import argparse
 import datetime
 from typing import List
 import logging
+import re
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -24,6 +25,7 @@ USER_EMAIL_COL = "user_email"
 MSG_TYPE_COL = "message_type"
 USER_ID_COL = "user_id"
 MSG_TS_COL = "message_ts"
+MENTIONS_COL = "mentioned_users"
 
 
 def get_channel_id(slack: WebClient, channel_name: str) -> str:
@@ -60,6 +62,13 @@ def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
     return user_df
 
 
+def get_mentions(text: str) -> List[str]:
+    # mentioned user syntax look like: <@U123ABC>
+    # the following regex strips just the id's out: U123ABC
+    prog = re.compile(r"<@(U\S*)>")
+    return prog.findall(text)
+
+
 def get_channel_messages(
     slack: WebClient, channel_id: str, days_to_fetch: int
 ) -> pd.DataFrame:
@@ -84,6 +93,7 @@ def get_channel_messages(
                     MSG_TYPE_COL: message["type"],
                     USER_ID_COL: message["user"],
                     MSG_TS_COL: message["ts"],
+                    MENTIONS_COL: get_mentions(message["text"]),
                 },
                 ignore_index=True,
             )
