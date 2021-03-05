@@ -19,11 +19,8 @@ import pandas as pd
 
 
 # define DataFrame column names once
-USER_NAME_COL = "user_name"
 USER_ID_COL = "user_id"
-USER_EMAIL_COL = "user_email"
 MSG_TYPE_COL = "message_type"
-USER_ID_COL = "user_id"
 MSG_TS_COL = "message_ts"
 MENTIONS_COL = "mentioned_users"
 
@@ -46,15 +43,13 @@ def get_all_members(slack: WebClient, channel_id: str) -> List[str]:
 
 def get_user_data(slack: WebClient, user_ids: List[str]) -> pd.DataFrame:
     logging.debug(f"Fetching user data for {len(user_ids)} users...")
-    user_df = pd.DataFrame(columns=[USER_NAME_COL, USER_ID_COL, USER_EMAIL_COL])
+    user_df = pd.DataFrame(columns=[USER_ID_COL])
     for user_id in user_ids:
         response = slack.users_profile_get(user=user_id)
         profile = response["profile"]
         user_df = user_df.append(
             {
-                USER_NAME_COL: profile["display_name_normalized"],
                 USER_ID_COL: user_id,
-                USER_EMAIL_COL: profile.get("email", ""),
             },
             ignore_index=True,
         )
