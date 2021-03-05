@@ -45,6 +45,6 @@ pip install -r requirements.txt
 ```
 
 ## analyze the data
-Once you've pulled the Slack message data, you can upload the data in the accompanying [Python notebook](https://colab.research.google.com/github/tngzng/slack-audit/blob/main/slack_message_analysis.ipynb). You can refer to the notebook for more detailed instructions on running the analysis. 
+Once you've pulled the Slack message data, you can upload the data in the accompanying [Python notebook](https://colab.research.google.com/drive/1aW_egDilybUZoxhZWEOUXdcrkoNdx7IS). You can refer to the notebook for more detailed instructions on running the analysis. 
 
-[![a screenshot of the Python notebook](./docs/notebook.png)](https://colab.research.google.com/drive/1W_LYegGxWBVqZ4_jeJaC8lT8hGHEvH5G#scrollTo=VFt3ldA57Mwe)
+[![a screenshot of the Python notebook](./docs/notebook.png)](https://colab.research.google.com/drive/1aW_egDilybUZoxhZWEOUXdcrkoNdx7IS)
