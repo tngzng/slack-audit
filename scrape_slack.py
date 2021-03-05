@@ -20,7 +20,6 @@ import pandas as pd
 
 # define DataFrame column names once
 USER_ID_COL = "user_id"
-MSG_TYPE_COL = "message_type"
 MSG_TS_COL = "message_ts"
 MENTIONS_COL = "mentioned_users"
 
@@ -69,7 +68,7 @@ def get_channel_messages(
 ) -> pd.DataFrame:
     logging.debug(f"Fetching messages for channel_id {channel_id}...")
     LIMIT = 200
-    message_df = pd.DataFrame(columns=[MSG_TYPE_COL, USER_ID_COL, MSG_TS_COL])
+    message_df = pd.DataFrame(columns=[USER_ID_COL, MSG_TS_COL, MENTIONS_COL])
     start_date = datetime.datetime.now() - datetime.timedelta(days=days_to_fetch)
     start_ts = start_date.timestamp()
     cursor = None
@@ -85,7 +84,6 @@ def get_channel_messages(
 
             message_df = message_df.append(
                 {
-                    MSG_TYPE_COL: message["type"],
                     USER_ID_COL: message["user"],
                     MSG_TS_COL: message["ts"],
                     MENTIONS_COL: get_mentions(message["text"]),
