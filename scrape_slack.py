@@ -5,13 +5,14 @@ General Usage:
   python scrape_slack.py -t <SLACK_TOKEN> -c <CHANNEL_NAME>
 
 Example:
-  python scrape_slack.py -t XXXXXXXXXXXXXXXX -c lnl-help-engineering
+  python scrape_slack.py -t XXXXXXXXXXXXXXXX -c lnl-help-engineering,lnl-daily-standup
 """
 import argparse
 import datetime
 from typing import List, Set
 import logging
 import re
+import json
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -106,7 +107,7 @@ def get_channel_messages(
                 {
                     USER_ID_COL: message["user"],
                     MSG_TS_COL: message["ts"],
-                    MENTIONS_COL: get_mentions(message["text"]),
+                    MENTIONS_COL: json.dumps(get_mentions(message["text"])),
                     CHANNEL_NAME_COL: channel["name_normalized"],
                     CHANNEL_ID_COL: channel["id"],
                 },

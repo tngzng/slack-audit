@@ -4,7 +4,6 @@ WORKDIR /app
 
 # install requirements
 COPY ./requirements.txt /app/
-COPY ./setup.py /app/
 
 RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 

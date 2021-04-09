@@ -36,7 +36,7 @@ kar build && kar run bash
 
 3. Scrape the messages from a channel, using the token for your Slack App:
 ```
-python scrape_slack.py -t <token> -c <channel> -d <days>
+python scrape_slack.py -t <token> -c <channels> -d <days>
 ```
 
 ** If you're not on a Mac or would prefer not to install Docker, you can install the requirements on your own machine: 
